@@ -635,11 +635,15 @@ public class ChromeUsb extends CordovaPlugin {
         int bulkTransfer(int interfaceNumber, int endpointNumber, int direction,
                          byte[] buffer, int timeout)
                 throws UsbError {
-            UsbEndpoint ep = mDevice.getInterface(interfaceNumber).getEndpoint(endpointNumber);
-            if (ep.getDirection() != direction) {
-                throw new UsbError("Endpoint has direction: " + directionName(ep.getDirection()));
+            int ret=0;
+            synchronized(this) {
+                UsbEndpoint ep = mDevice.getInterface(interfaceNumber).getEndpoint(endpointNumber);
+                if (ep.getDirection() != direction) {
+                    throw new UsbError("Endpoint has direction: " + directionName(ep.getDirection()));
+                }
+                ret = mConnection.bulkTransfer(ep, buffer, buffer.length, timeout);
             }
-            return mConnection.bulkTransfer(ep, buffer, buffer.length, timeout);
+            return ret;
         }
         int interruptTransfer(int interfaceNumber, int endpointNumber, int direction,
                               byte[] buffer, int timeout)
