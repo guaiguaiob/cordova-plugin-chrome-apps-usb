@@ -140,24 +140,32 @@ public class ChromeUsb extends CordovaPlugin {
                 return true;
             } else if ("openDevice".equals(action)) {
                 this.openCallbackContext = callbackContext;
-                cordova.getThreadPool().execute(new Runnable() {
-                    public void run() {
-                        try {
-                            openDevice(args, params, callbackContext);
-                        } catch (Exception e) {
-                            callbackContext.error(e.getMessage());
+                synchronized (this) {
+                    cordova.getThreadPool().execute(new Runnable() {
+                        public void run() {
+                            try {
+                                openDevice(args, params, callbackContext);
+                            } catch (Exception e) {
+                                callbackContext.error(e.getMessage());
+                            }
                         }
-                    }
-                });
+                    });
+                }
                 return true;
             } else if ("closeDevice".equals(action)) {
-                closeDevice(args, params, callbackContext);
+                synchronized (this) {
+                    closeDevice(args, params, callbackContext);
+                }
                 return true;
             } else if ("listInterfaces".equals(action)) {
-                listInterfaces(args, params, callbackContext);
+                synchronized (this) {
+                    listInterfaces(args, params, callbackContext);
+                }
                 return true;
             } else if ("claimInterface".equals(action)) {
-                claimInterface(args, params, callbackContext);
+                synchronized (this) {
+                    claimInterface(args, params, callbackContext);
+                }
                 return true;
             } else if ("releaseInterface".equals(action)) {
                 releaseInterface(args, params, callbackContext);
