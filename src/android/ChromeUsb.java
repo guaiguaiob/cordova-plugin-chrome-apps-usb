@@ -139,7 +139,7 @@ public class ChromeUsb extends CordovaPlugin {
                 });
                 return true;
             } else if ("openDevice".equals(action)) {
-                this.openCallbackContext = callbackContext;
+                //this.openCallbackContext = callbackContext;
                 cordova.getThreadPool().execute(new Runnable() {
                     public void run() {
                         synchronized (ChromeUsb.this) {
