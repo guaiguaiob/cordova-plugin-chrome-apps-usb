@@ -266,11 +266,12 @@ public class ChromeUsb extends CordovaPlugin {
         HashMap<String, UsbDevice> devices = mUsbManager.getDeviceList();
         JSONArray filters = params.optJSONArray("filters");
         JSONArray result = new JSONArray();
+        Log.d(TAG, "we got devices, filter it");
         for (UsbDevice device: devices.values()) {
+            Log.d(TAG, "deviceID: " + device.getDeviceId());
+            Log.d(TAG, "vendorID: " + device.getVendorId());
+            Log.d(TAG, "ProductID: " + device.getProductId());
             if (filterDevice(device, filters)) {
-                Log.d(TAG, "deviceID: " + device.getDeviceId());
-                Log.d(TAG, "vendorID: " + device.getVendorId());
-                Log.d(TAG, "ProductID: " + device.getProductId());
                 addDeviceToArray(result, device.getDeviceId(), device.getVendorId(),
                         device.getProductId());
             }
