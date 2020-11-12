@@ -1,6 +1,6 @@
 {
-  "name": "@guaiguaiob/cordova-plugin-chrome-apps-usbb",
-  "version": "1.0.0",
+  "name": "@guaiguaiob/cordova-plugin-chrome-apps-usb",
+  "version": "1.2.2",
   "description": "Cordova plugin of USB for Android",
   "cordova": {
     "id": "cordova-plugin-chrome-apps-usb",
