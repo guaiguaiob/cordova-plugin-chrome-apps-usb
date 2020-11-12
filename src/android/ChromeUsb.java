@@ -268,6 +268,9 @@ public class ChromeUsb extends CordovaPlugin {
         JSONArray result = new JSONArray();
         for (UsbDevice device: devices.values()) {
             if (filterDevice(device, filters)) {
+                Log.d(TAG, "deviceID: " + device.getDeviceId());
+                Log.d(TAG, "vendorID: " + device.getVendorId());
+                Log.d(TAG, "ProductID: " + device.getProductId());
                 addDeviceToArray(result, device.getDeviceId(), device.getVendorId(),
                         device.getProductId());
             }
