@@ -119,7 +119,11 @@ public class ChromeUsb extends CordovaPlugin {
 
         if (mUsbManager == null) {
             mUsbManager = (UsbManager) webView.getContext().getSystemService(Context.USB_SERVICE);
-            mPermissionIntent = PendingIntent.getBroadcast(webView.getContext(), 0, new Intent(ACTION_USB_PERMISSION), PendingIntent.FLAG_MUTABLE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                mPermissionIntent = PendingIntent.getBroadcast(webView.getContext(), 0, new Intent(ACTION_USB_PERMISSION), PendingIntent.FLAG_MUTABLE|PendingIntent.FLAG_ALLOW_UNSAFE_IMPLICIT_INTENT);
+            } else {
+                mPermissionIntent = PendingIntent.getBroadcast(webView.getContext(), 0, new Intent(ACTION_USB_PERMISSION), 0);
+            }
         }
 
         try {
@@ -353,7 +357,11 @@ public class ChromeUsb extends CordovaPlugin {
                     };
 
                     IntentFilter filter = new IntentFilter(ACTION_USB_PERMISSION);
-                    webView.getContext().registerReceiver(mUsbReceiver, filter);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        webView.getContext().registerReceiver(mUsbReceiver, filter, Context.RECEIVER_EXPORTED);
+                    } else {
+                        webView.getContext().registerReceiver(mUsbReceiver, filter);
+                    }
                 }
 
                 mUsbManager.requestPermission(usbDev, mPermissionIntent);
