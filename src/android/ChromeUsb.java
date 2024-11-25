@@ -119,7 +119,7 @@ public class ChromeUsb extends CordovaPlugin {
 
         if (mUsbManager == null) {
             mUsbManager = (UsbManager) webView.getContext().getSystemService(Context.USB_SERVICE);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 mPermissionIntent = PendingIntent.getBroadcast(webView.getContext(), 0, new Intent(ACTION_USB_PERMISSION), PendingIntent.FLAG_MUTABLE|PendingIntent.FLAG_ALLOW_UNSAFE_IMPLICIT_INTENT);
             } else {
                 mPermissionIntent = PendingIntent.getBroadcast(webView.getContext(), 0, new Intent(ACTION_USB_PERMISSION), 0);
